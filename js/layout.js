@@ -49,7 +49,6 @@ $(function () {
 
     Layout.prototype.generateNote = function(alias) {
         var tonics = this.notes.getTonic(alias);
-        console.log(tonics);
         if (tonics.length) {
             this.tonics = tonics;
             this.tonic = _.first(tonics);
