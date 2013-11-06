@@ -17,7 +17,7 @@ $(function () {
         this.timer = false;
 
         this.correctMessages = [
-            'Повезло ;-)',
+            'Повезло',
             'Правильно!',
             'Молодец!',
             'Отлично!',
@@ -184,7 +184,7 @@ $(function () {
 
     Layout.prototype.nextQuestion = function(alias) {
         this.resetInputs();
-        $('.controls .btn').css('disabled', 'disabled');
+        $('.controls .btn').attr('disabled', 'disabled');
         $('.b-note .mus').text('...');
         $('.b-note .lang').text('');
         var _this = this;
@@ -193,7 +193,7 @@ $(function () {
             _this.generateNote(alias);
             _this.drawNote();
             _this.startTimer();
-            $('.controls .btn').css('disabled', 'none');
+            $('.controls .btn').removeAttr('disabled');
         }, 2000);
     }
 
