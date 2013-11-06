@@ -16,6 +16,21 @@ $(function () {
         this.timeLeft = this.timeLimit;
         this.timer = false;
 
+        this.correctMessages = [
+            'Повезло ;-)',
+            'Правильно!',
+            'Молодец!',
+            'Отлично!',
+            'Так держать!',
+            'Угадали!'
+        ];
+
+        this.wrongMessages = [
+            'А вот и нет',
+            'Неправильно',
+            'Не сдавайтесь!'
+        ];
+
         alertify.set({ delay: 2000 });
 
         var _this = this;
@@ -44,11 +59,20 @@ $(function () {
         this.notes = new window.Notes();
 
         // manual start
-        alertify.log('Guess signs');
-        alertify.success('Start!');
+        alertify.log('Угадайте знаки альтерации.');
+        alertify.success('Готовы?');
         this.nextQuestion('C');
 
     };
+
+    Layout.prototype.getRandomMessage = function(type) {
+        type = type || 'wrong';
+        var source = (type === 'wrong') ? this.wrongMessages : this.correctMessages;
+        var min = 0;
+        var max = source.length - 1;
+        var index = Math.ceil( Math.random() * (max - min) + min );
+        return source[index];
+    }
 
     Layout.prototype.startTimer = function() {
         var _this = this;
@@ -91,6 +115,7 @@ $(function () {
 
     Layout.prototype.drawNote = function() {
         $('.b-note .mus').text(this.tonic.alias);
+        $('.b-note .lang').text(this.tonic.lang.ru);
     }
 
     Layout.prototype.updateScores = function() {
@@ -100,14 +125,18 @@ $(function () {
     }
 
     Layout.prototype.onCorrect = function() {
-        alertify.success('Correct');
-        this.scores++;
-        this.correctCount++;
-        this.nextQuestion();
+        if (this.timer) {
+            clearInterval(this.timer);
+            this.timer = false;
+            alertify.success(this.getRandomMessage('success'));
+            this.scores++;
+            this.correctCount++;
+            this.nextQuestion();
+        }
     }
 
     Layout.prototype.onWrong = function() {
-        alertify.error('Wrong');
+        alertify.error(this.getRandomMessage('wrong'));
         this.scores--;
         this.wrongCount++;
         this.updateScores();
