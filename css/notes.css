@@ -2,6 +2,9 @@
     display: inline-block;
     font-size: 5em;
 }
+.descr {
+    margin: 10px 0;
+}
 .alertify-logs {
     top: 10px;
     right: 10px;

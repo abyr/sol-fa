@@ -33,6 +33,9 @@ $(function () {
 
         alertify.set({ delay: 2000 });
 
+        $('.game').hide();
+        $('.descr').show();
+
         var _this = this;
 
         $('.b-sign-type .btn').click(function(){
@@ -46,10 +49,27 @@ $(function () {
         });
 
         $('.btn-info').click(function(){
-            $('.b-sign-type .btn').removeClass('btn-info');
-            $('.b-signs-count .btn').removeClass('btn-info');
-            $('.b-sign-type .btn:first').addClass('btn-info');
-            $('.b-signs-count .btn:first').addClass('btn-info');
+            _this.resetInputs();
+        });
+
+        $('.controls .start').click(function() {
+            $('.controls .start').toggleClass('hidden');
+            $('.controls .stop').toggleClass('hidden');
+            $('.descr').hide();
+            $('.game').show();
+
+            alertify.success('Готовы?');
+
+            _this.nextQuestion();
+        });
+
+        $('.controls .stop').click(function(){
+            _this.stopTimer();
+            $('.controls .start').toggleClass('hidden');
+            $('.controls .stop').toggleClass('hidden');
+
+            $('.game').hide();
+            $('.descr').show();
         });
 
         $('.check_tonic').click(function() {
@@ -58,12 +78,13 @@ $(function () {
 
         this.notes = new window.Notes();
 
-        // manual start
-        alertify.log('Угадайте знаки альтерации.');
-        alertify.success('Готовы?');
-        this.nextQuestion('C');
-
     };
+
+    Layout.prototype.resetInputs = function(type) {
+        $('.b-sign-type .btn').removeClass('btn-info');
+        $('.b-signs-count .btn').removeClass('btn-info');
+        $('.b-sign-type .btn:first').addClass('btn-info');
+    }
 
     Layout.prototype.getRandomMessage = function(type) {
         type = type || 'wrong';
@@ -72,6 +93,15 @@ $(function () {
         var max = source.length - 1;
         var index = Math.ceil( Math.random() * (max - min) + min );
         return source[index];
+    }
+
+    Layout.prototype.stopTimer = function() {
+        if (this.timer) {
+            clearInterval(this.timer);
+            this.timer = false;
+        }
+        this.timeLeft = this.timeLimit;
+        $('.time').text(this.timeLimit);
     }
 
     Layout.prototype.startTimer = function() {
@@ -126,8 +156,7 @@ $(function () {
 
     Layout.prototype.onCorrect = function() {
         if (this.timer) {
-            clearInterval(this.timer);
-            this.timer = false;
+            this.stopTimer();
             alertify.success(this.getRandomMessage('success'));
             this.scores++;
             this.correctCount++;
@@ -136,25 +165,35 @@ $(function () {
     }
 
     Layout.prototype.onWrong = function() {
-        alertify.error(this.getRandomMessage('wrong'));
-        this.scores--;
-        this.wrongCount++;
-        this.updateScores();
+        if (this.timer) {
+            alertify.error(this.getRandomMessage('wrong'));
+            this.scores--;
+            this.wrongCount++;
+            this.updateScores();
+        }
     }
 
     Layout.prototype.onTimeOut = function() {
-        alertify.error('Time out!');
-        this.scores--;
-        this.nextQuestion();
+        if (this.timer) {
+            this.stopTimer();
+            alertify.error('Time out!');
+            this.scores--;
+            this.nextQuestion();
+        }
     }
 
     Layout.prototype.nextQuestion = function(alias) {
+        this.resetInputs();
+        $('.controls .btn').css('disabled', 'disabled');
+        $('.b-note .mus').text('...');
+        $('.b-note .lang').text('');
         var _this = this;
         this.updateScores();
         setTimeout(function(){
             _this.generateNote(alias);
             _this.drawNote();
             _this.startTimer();
+            $('.controls .btn').css('disabled', 'none');
         }, 2000);
     }
 
@@ -165,7 +204,10 @@ $(function () {
         if (_this.tonic.sign !== sign) {
             correct = false;
         }
-        var count = $('.b-signs-count .btn-info').data('value');
+        var count = 0;
+        if (sign) {
+            count = $('.b-signs-count .btn-info').data('value');
+        }
         if (_this.tonic.signs !== count) {
             correct = false;
         }
