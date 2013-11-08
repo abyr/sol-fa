@@ -9,6 +9,20 @@
     top: 10px;
     right: 10px;
 }
+.game {
+    display: none;
+}
+.timeStats {
+    margin: 10px 0;
+}
+.gameboard {
+    background-color: #F8F8F8;
+    padding: 10px;
+    -moz-border-radius: 20px;
+    -webkit-border-radius: 20px;
+    -khtml-border-radius: 20px;
+    border-radius: 20px;
+}
 .hidden { display: none; }
 .correct { color: green; }
 .wrong { color: red; }

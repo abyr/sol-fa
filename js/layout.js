@@ -16,6 +16,10 @@ $(function () {
         this.timeLeft = this.timeLimit;
         this.timer = false;
 
+        this.startTime = 0;
+        this.totalTime = 0;
+        this.averageTime = 0;
+
         this.correctMessages = [
             'Повезло',
             'Правильно!',
@@ -32,9 +36,6 @@ $(function () {
         ];
 
         alertify.set({ delay: 2000 });
-
-        $('.game').hide();
-        $('.descr').show();
 
         var _this = this;
 
@@ -111,7 +112,8 @@ $(function () {
             clearInterval(_this.timer);
             this.timeLeft = this.timeLimit;
         }
-        $('.time').text(this.timeLimit);
+
+        $('.time').removeClass('wrong').text(this.timeLimit);
         this.timer = setInterval(function() {
             _this.timeLeft = _this.timeLeft-1;
             if (_this.timeLeft <= 0) {
@@ -119,6 +121,7 @@ $(function () {
             }
             _this.updateTimer();
         }, 1000);
+        this.startTime = +new Date();
     }
 
     Layout.prototype.updateTimer = function() {
@@ -154,12 +157,20 @@ $(function () {
         $('.scores').text(this.scores);
     }
 
+    Layout.prototype.updateAverageTime = function() {
+        this.averageTime = this.totalTime / this.correctCount;
+        averageSeconds = Math.floor(this.averageTime / 1000);
+        $('.averageTime').text(averageSeconds + ' с');
+    }
+
     Layout.prototype.onCorrect = function() {
         if (this.timer) {
             this.stopTimer();
-            alertify.success(this.getRandomMessage('success'));
+            this.totalTime += +new Date() - this.startTime;
             this.scores++;
             this.correctCount++;
+            alertify.success(this.getRandomMessage('success'));
+            this.updateAverageTime();
             this.nextQuestion();
         }
     }

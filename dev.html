@@ -35,51 +35,63 @@
                     <p>Порядок написания бемолей при ключе</p>
                     <p><b>си, ми, ля, ре, соль, до, фа</b></p>
                 </div>
-                <div class="game">
-                    <span class="mus">...</span>
-                    <span class="lang"></span>
+                <div class="gameboard game">
+                    <div class="game">
+                        <span class="mus">...</span>
+                        <span class="lang"></span>
+                    </div>
+                    <div class="game">
+                        <div class="btn-group b-sign-type">
+                            <button type="button" data-value='' class="btn btn-info">
+                                <small>нет знаков</small>
+                            </button>
+                            <button type="button" data-value='#' class="btn btn-default">#</button>
+                            <button type="button" data-value='b' class="btn btn-default">b</button>
+                        </div>
+                        <br/>
+                        <br/>
+                        <div class="btn-group b-signs-count">
+                            <button type="button" data-value='1' class="btn btn-default">1</button>
+                            <button type="button" data-value='2' class="btn btn-default">2</button>
+                            <button type="button" data-value='3' class="btn btn-default">3</button>
+                            <button type="button" data-value='4' class="btn btn-default">4</button>
+                            <button type="button" data-value='5' class="btn btn-default">5</button>
+                            <button type="button" data-value='6' class="btn btn-default">6</button>
+                            <button type="button" data-value='7' class="btn btn-default">7</button>
+                        </div>
+                        <br/><br/>
+                        <div>
+                            <button type="button" class="btn btn-default btn-block check_tonic">Проверить</button>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="col-md-4 ">
-                <p><b>Очки <span class="scores">0</span></b></p>
-                <p class="correct">Правильно <span class="correctCount">0</span></p>
-                <p class="wrong">Ошибки <span class="wrongCount">0</span></p>
-                <p class="timer">
-                    <small class="time">--</small>
-                </p>
-                <div class="controls">
-                    <button type="button" class="btn btn-default btn-block start">Старт</button>
-                    <button type="button" class="btn btn-default btn-block stop hidden">Стоп</button>
+                <div class="filters">
+
                 </div>
+                <div class="gameStats">
+                    <p><b>Очки <span class="scores">0</span></b></p>
+                    <p class="correct">Правильно <span class="correctCount">0</span></p>
+                    <p class="wrong">Ошибки <span class="wrongCount">0</span></p>
+                    <p class="timer">
+                        <small class="time">--</small>
+                    </p>
+                </div>
+                <div class="controls">
+                    <button type="button" class="btn btn-default btn-block start">Начать игру</button>
+                    <button type="button" class="btn btn-default btn-block stop hidden">Остановить игру</button>
+                </div>
+                <div class="timeStats">
+                    <small>Среднее время на правильный ответ <span class="averageTime">...</span></small>
+                </div>
+
             </div>
         </div>
 
         <div class="row b-signs-input">
             <div class="col-md-8">
-                <div class="game">
-                    <div class="btn-group b-sign-type">
-                        <button type="button" data-value='' class="btn btn-info">
-                            <small>нет знаков</small>
-                        </button>
-                        <button type="button" data-value='#' class="btn btn-default">#</button>
-                        <button type="button" data-value='b' class="btn btn-default">b</button>
-                    </div>
-                    <br/>
-                    <br/>
-                    <div class="btn-group b-signs-count">
-                        <button type="button" data-value='1' class="btn btn-default">1</button>
-                        <button type="button" data-value='2' class="btn btn-default">2</button>
-                        <button type="button" data-value='3' class="btn btn-default">3</button>
-                        <button type="button" data-value='4' class="btn btn-default">4</button>
-                        <button type="button" data-value='5' class="btn btn-default">5</button>
-                        <button type="button" data-value='6' class="btn btn-default">6</button>
-                        <button type="button" data-value='7' class="btn btn-default">7</button>
-                    </div>
-                    <br/><br/>
-                    <div>
-                        <button type="button" class="btn btn-default btn-block check_tonic">Проверить</button>
-                    </div>
-                </div>
+
             </div>
             <div class="col-md-4">
             </div>
