@@ -301,10 +301,30 @@ Notes.prototype.getTonic = function(alias) {
 }
 
 Notes.prototype.getRandomTonic = function(filters) {
-    var min = 0;
-    var max = this.all.length - 1;
-    var index = Math.ceil( Math.random() * (max - min) + min );
-    return [this.all[index]];
+    if (typeof filters.lad === 'undefined') {
+        filters.lad = false;
+    }
+    if (typeof filters.maxSignsCount === 'undefined') {
+        filters.maxSignsCount = 7
+    }
+
+    var source = _.filter(this.all, function(note){
+        var correct = true;
+        if (note.signs > filters.maxSignsCount) {
+            correct = false;
+        }
+        if (filters.lad && note.type !== filters.lad) {
+            correct = false;
+        }
+        return correct;
+    });
+
+    var imin = -1;
+    var imax = source.length - 1;
+    var i = Math.random() * (imax - imin) + imin;
+    var index = Math.ceil(i);
+
+    return [source[index]];
 }
 
 window.Note = Note;

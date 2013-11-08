@@ -23,6 +23,15 @@
     -khtml-border-radius: 20px;
     border-radius: 20px;
 }
+.block {
+    margin: 10px;
+}
+.filters {
+    margin-bottom: 20px;
+}
+span.filter {
+    margin-right: 10px;
+}
 .hidden { display: none; }
 .correct { color: green; }
 .wrong { color: red; }

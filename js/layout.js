@@ -21,18 +21,18 @@ $(function () {
         this.averageTime = 0;
 
         this.correctMessages = [
-            'Повезло',
+            'Да!',
             'Правильно!',
             'Молодец!',
             'Отлично!',
-            'Так держать!',
-            'Угадали!'
+            'Верно!',
+            'Так держать!'
         ];
 
         this.wrongMessages = [
-            'А вот и нет',
             'Неправильно',
-            'Не сдавайтесь!'
+            'Не сдавайтесь!',
+            'Что-то не так'
         ];
 
         alertify.set({ delay: 2000 });
@@ -46,6 +46,14 @@ $(function () {
 
         $('.b-signs-count .btn').click(function(){
             $('.b-signs-count .btn').removeClass('btn-info');
+            $(this).addClass('btn-info');
+        });
+        $('.filters-lad .btn-group .btn').click(function(){
+            $('.filters-lad .btn-group .btn').removeClass('btn-info');
+            $(this).addClass('btn-info');
+        });
+        $('.filters-count .btn-group .btn').click(function(){
+            $('.filters-count .btn-group .btn').removeClass('btn-info');
             $(this).addClass('btn-info');
         });
 
@@ -90,7 +98,7 @@ $(function () {
     Layout.prototype.getRandomMessage = function(type) {
         type = type || 'wrong';
         var source = (type === 'wrong') ? this.wrongMessages : this.correctMessages;
-        var min = 0;
+        var min = -1;
         var max = source.length - 1;
         var index = Math.ceil( Math.random() * (max - min) + min );
         return source[index];
@@ -124,6 +132,13 @@ $(function () {
         this.startTime = +new Date();
     }
 
+    Layout.prototype.getLad = function() {
+        return $('.filters-lad .btn-info').data('value') || false;
+    }
+    Layout.prototype.getMaxSignsCount = function() {
+        return $('.filters-count .btn-info').data('value') || 7
+    }
+
     Layout.prototype.updateTimer = function() {
         $('.time').text(this.timeLeft);
     }
@@ -134,7 +149,16 @@ $(function () {
     }
 
     Layout.prototype.generateNote = function(alias) {
-        var tonics = this.notes.getTonic(alias);
+        var tonics = [];
+        if (alias) {
+            tonics = this.notes.getTonic(alias);
+        } else {
+            filters = {
+                lad: this.getLad(),
+                maxSignsCount: this.getMaxSignsCount()
+            }
+            tonics = this.notes.getRandomTonic(filters);
+        }
         if (tonics.length) {
             this.tonics = tonics;
             this.tonic = _.first(tonics);
