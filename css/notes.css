@@ -1,3 +1,7 @@
+html,
+body {
+  height: 100%;
+}
 .b-notes .mus {
     display: inline-block;
     font-size: 5em;
@@ -31,6 +35,24 @@
 }
 span.filter {
     margin-right: 10px;
+}
+.main {
+    min-height: 100%;
+    height: auto;
+    margin: 0 auto -60px;
+    padding: 0 0 60px;
+}
+.footer {
+    height: 60px;
+    background-color: #f5f5f5;
+}
+.footer .container {
+    width: auto;
+    max-width: 680px;
+    padding: 0 15px;
+}
+.footer .links {
+    margin: 20px 0;
 }
 .hidden { display: none; }
 .correct { color: green; }

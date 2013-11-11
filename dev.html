@@ -12,112 +12,119 @@
 </head>
 <body>
 
-<div class="container">
-    <div class="page-header">
-      <h1>Сольфеджио <small>под давлением</small></h1>
-      <h2>Sol-fa <small>under pressure</small></h2>
-    </div>
-
-    <div class='title'>
-        <h3>Определите знаки альтерации</h3>
-    </div>
-
-    <div class="b-signs" >
-        <div class="row b-notes">
-            <div class="col-md-8 b-note">
-                <div class="descr">
-                    <h4>Подсказка</h4>
-                    <p><b>Последний диез</b> при ключе всегда относится к <b>VII</b> ступени мажора</p>
-                    <p><b>Предпоследний бемоль</b> при ключе всегда относится к <b>I</b> ступени мажора</p>
-                    <hr/>
-                    <p>Порядок написания диезов при ключе</p>
-                    <p><b>фа, до, соль, ре, ля, ми, си</b></p>
-                    <p>Порядок написания бемолей при ключе</p>
-                    <p><b>си, ми, ля, ре, соль, до, фа</b></p>
-                </div>
-                <div class="gameboard game">
-                    <div class="game">
-                        <span class="mus">...</span>
-                        <span class="lang"></span>
-                    </div>
-                    <div class="game">
-                        <div class="btn-group b-sign-type">
-                            <button type="button" data-value='' class="btn btn-info">
-                                <small>нет знаков</small>
-                            </button>
-                            <button type="button" data-value='#' class="btn btn-default">#</button>
-                            <button type="button" data-value='b' class="btn btn-default">b</button>
-                        </div>
-                        <br/>
-                        <br/>
-                        <div class="btn-group b-signs-count">
-                            <button type="button" data-value='1' class="btn btn-default">1</button>
-                            <button type="button" data-value='2' class="btn btn-default">2</button>
-                            <button type="button" data-value='3' class="btn btn-default">3</button>
-                            <button type="button" data-value='4' class="btn btn-default">4</button>
-                            <button type="button" data-value='5' class="btn btn-default">5</button>
-                            <button type="button" data-value='6' class="btn btn-default">6</button>
-                            <button type="button" data-value='7' class="btn btn-default">7</button>
-                        </div>
-                        <br/><br/>
-                        <div>
-                            <button type="button" class="btn btn-default btn-block check_tonic">Проверить</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4 ">
-                <div class="filters">
-                    <div class="block filters-lad">
-                        <span class='filter'>Лад</span>
-                        <div class="btn-group btn-group-xs">
-                            <button type="button" data-value=''
-                                class="btn btn-default btn-info">Любой</button>
-                            <button type="button" data-value='major' class="btn btn-default">Мажор</button>
-                            <button type="button" data-value='minor' class="btn btn-default">Минор</button>
-                        </div>
-                    </div>
-                    <div class="block filters-count">
-                        <span class='filter'>Максимум знаков</span>
-                        <div class="btn-group btn-group-xs">
-                            <button type="button" data-value='1' class="btn btn-default">1</button>
-                            <button type="button" data-value='2' class="btn btn-default">2</button>
-                            <button type="button" data-value='3' class="btn btn-default">3</button>
-                            <button type="button" data-value='4' class="btn btn-default">4</button>
-                            <button type="button" data-value='5' class="btn btn-default">5</button>
-                            <button type="button" data-value='6' class="btn btn-default">6</button>
-                            <button type="button" data-value='7' class="btn btn-default btn-info">7</button>
-                        </div>
-                    </div>
-                </div>
-                <div class="gameStats">
-                    <p><b>Очки <span class="scores">0</span></b></p>
-                    <p class="correct">Правильно <span class="correctCount">0</span></p>
-                    <p class="wrong">Ошибки <span class="wrongCount">0</span></p>
-                    <p class="timer">
-                        <small class="time">--</small>
-                    </p>
-                </div>
-                <div class="controls">
-                    <button type="button" class="btn btn-default btn-block start">Начать игру</button>
-                    <button type="button" class="btn btn-default btn-block stop hidden">Остановить игру</button>
-                </div>
-                <div class="timeStats">
-                    <small>Среднее время на правильный ответ <span class="averageTime">...</span></small>
-                </div>
-
-            </div>
+<div class="main">
+    <div class="container">
+        <div class="page-header">
+          <h1>Сольфеджио <small>под давлением</small></h1>
+          <h2>Sol-fa <small>under pressure</small></h2>
         </div>
 
-        <div class="row b-signs-input">
-            <div class="col-md-8">
+        <div class='title'>
+            <h3>Определите знаки альтерации</h3>
+        </div>
 
-            </div>
-            <div class="col-md-4">
+        <div class="b-signs" >
+            <div class="row b-notes">
+                <div class="col-md-8 b-note">
+                    <div class="descr">
+                        <h4>Подсказка</h4>
+                        <p><b>Последний диез</b> при ключе всегда относится к <b>VII</b> ступени мажора</p>
+                        <p><b>Предпоследний бемоль</b> при ключе всегда относится к <b>I</b> ступени мажора</p>
+                        <hr/>
+                        <p>Порядок написания диезов при ключе</p>
+                        <p><b>фа, до, соль, ре, ля, ми, си</b></p>
+                        <p>Порядок написания бемолей при ключе</p>
+                        <p><b>си, ми, ля, ре, соль, до, фа</b></p>
+                    </div>
+                    <div class="gameboard game">
+                        <div class="game">
+                            <span class="mus">...</span>
+                            <span class="lang"></span>
+                        </div>
+                        <div class="game">
+                            <div class="btn-group b-sign-type">
+                                <button type="button" data-value='' class="btn btn-info">
+                                    <small>нет знаков</small>
+                                </button>
+                                <button type="button" data-value='#' class="btn btn-default">#</button>
+                                <button type="button" data-value='b' class="btn btn-default">b</button>
+                            </div>
+                            <br/>
+                            <br/>
+                            <div class="btn-group b-signs-count">
+                                <button type="button" data-value='1' class="btn btn-default">1</button>
+                                <button type="button" data-value='2' class="btn btn-default">2</button>
+                                <button type="button" data-value='3' class="btn btn-default">3</button>
+                                <button type="button" data-value='4' class="btn btn-default">4</button>
+                                <button type="button" data-value='5' class="btn btn-default">5</button>
+                                <button type="button" data-value='6' class="btn btn-default">6</button>
+                                <button type="button" data-value='7' class="btn btn-default">7</button>
+                            </div>
+                            <br/><br/>
+                            <div>
+                                <button type="button" class="btn btn-default btn-block check_tonic">Проверить</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 ">
+                    <div class="filters">
+                        <div class="block filters-lad">
+                            <span class='filter'>Лад</span>
+                            <div class="btn-group btn-group-xs">
+                                <button type="button" data-value=''
+                                    class="btn btn-default btn-info">Любой</button>
+                                <button type="button" data-value='major' class="btn btn-default">Мажор</button>
+                                <button type="button" data-value='minor' class="btn btn-default">Минор</button>
+                            </div>
+                        </div>
+                        <div class="block filters-count">
+                            <span class='filter'>Максимум знаков</span>
+                            <div class="btn-group btn-group-xs">
+                                <button type="button" data-value='1' class="btn btn-default">1</button>
+                                <button type="button" data-value='2' class="btn btn-default">2</button>
+                                <button type="button" data-value='3' class="btn btn-default">3</button>
+                                <button type="button" data-value='4' class="btn btn-default">4</button>
+                                <button type="button" data-value='5' class="btn btn-default">5</button>
+                                <button type="button" data-value='6' class="btn btn-default">6</button>
+                                <button type="button" data-value='7' class="btn btn-default btn-info">7</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="gameStats">
+                        <p><b>Очки <span class="scores">0</span></b></p>
+                        <p class="correct">Правильно <span class="correctCount">0</span></p>
+                        <p class="wrong">Ошибки <span class="wrongCount">0</span></p>
+                        <p class="timer">
+                            <small class="time">--</small>
+                        </p>
+                    </div>
+                    <div class="controls">
+                        <button type="button" class="btn btn-default btn-block start">Начать игру</button>
+                        <button type="button" class="btn btn-default btn-block stop hidden">Остановить игру</button>
+                    </div>
+                    <div class="timeStats">
+                        <small>Среднее время на правильный ответ <span class="averageTime">...</span></small>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 </div>
+
+<div class="footer">
+    <div class="container">
+        <div class="row links">
+            <div class="col-md-8">
+                <span class="text-muted"><a href="https://github.com/abyrcheg/sol-fa/archive/master.zip" target="_blank">Скачать zip архив</a></span>
+            </div>
+            <div class="col-md-4 ">
+                <span class="text-muted">by <a href="https://github.com/abyrcheg" target="_blank" >Aleksandr Denisenko</a></span>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 <script src="bower_components/jquery/jquery.min.js"></script>
 <script src="bower_components/underscore/underscore-min.js"></script>
