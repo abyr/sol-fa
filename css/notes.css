@@ -2,8 +2,11 @@ html,
 body {
   height: 100%;
 }
+.b-notes .lang {
+    font-size: 4em;
+}
 .b-notes .mus {
-    display: inline-block;
+    display: none;
     font-size: 5em;
 }
 .descr {
