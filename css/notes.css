@@ -4,6 +4,8 @@ body {
 }
 .b-notes .lang {
     font-size: 4em;
+    display: inline-block;
+    min-height: 75px;
 }
 .b-notes .mus {
     display: none;
