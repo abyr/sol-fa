@@ -1,0 +1,7 @@
+{
+  "name": "solfa-pressure",
+  "dependencies": {
+    "serve-static": "^1.10.2",
+    "connect": "^3.4.1"
+  }
+}
