@@ -1,9 +1,52 @@
-(function() {
 $(function () {
-
     var Layout, layout;
 
-    Layout = function() {
+    Messages = function () {
+        this.correctList = [
+            'Да!',
+            'Правильно!',
+            'Молодец!',
+            'Отлично!',
+            'Верно!',
+            'Так держать!'
+        ];
+
+        this.wrongList = [
+            'Неправильно',
+            'Не сдавайтесь!',
+            'Что-то не так'
+        ];
+
+        this.isReadyMessage = 'Готовы?';
+
+        this.getRandomIndexInRange = function (min, max) {
+            return Math.ceil( Math.random() * (max - min) + min );
+        };
+
+        this.getIsReadyMessage = function () {
+            return this.isReadyMessage;
+        };
+
+        this.getSuccessMessage = function () {
+            var list = this.correctList,
+                index = Math.floor(Math.random()*list.length);
+
+            return list[index];
+        };
+
+        this.getErrorMessage = function () {
+            var list = this.wrongList,
+                index = Math.floor(Math.random()*list.length);
+
+            return list[index];
+        };
+    };
+
+
+    Layout = function () {
+        var messages = new Messages();
+
+        this.messages = messages;
 
         this.tonic = false;
         this.tonics = [];
@@ -20,24 +63,10 @@ $(function () {
         this.totalTime = 0;
         this.averageTime = 0;
 
-        this.correctMessages = [
-            'Да!',
-            'Правильно!',
-            'Молодец!',
-            'Отлично!',
-            'Верно!',
-            'Так держать!'
-        ];
-
-        this.wrongMessages = [
-            'Неправильно',
-            'Не сдавайтесь!',
-            'Что-то не так'
-        ];
-
         alertify.set({ delay: 2000 });
 
         var _this = this;
+
 
         $('.b-sign-type .btn').click(function(){
             $('.b-sign-type .btn').removeClass('btn-info');
@@ -61,13 +90,13 @@ $(function () {
             _this.resetInputs();
         });
 
-        $('.controls .start').click(function() {
+        $('.controls .start').click(function () {
             $('.controls .start').toggleClass('hidden');
             $('.controls .stop').toggleClass('hidden');
             $('.descr').hide();
             $('.game').show();
 
-            alertify.success('Готовы?');
+            alertify.success(messages.getIsReadyMessage());
 
             _this.nextQuestion();
         });
@@ -97,11 +126,18 @@ $(function () {
 
     Layout.prototype.getRandomMessage = function(type) {
         type = type || 'wrong';
-        var source = (type === 'wrong') ? this.wrongMessages : this.correctMessages;
-        var min = -1;
-        var max = source.length - 1;
-        var index = Math.ceil( Math.random() * (max - min) + min );
-        return source[index];
+
+        if (type === 'success') {
+            this.messages.getCorrectMessage();
+        } else {
+            this.messages.getErrorMessage();
+        }
+
+        // var source = (type === 'wrong') ? this.wrongMessages : this.correctMessages;
+        // var min = -1;
+        // var max = source.length - 1;
+        // var index = Math.ceil( Math.random() * (max - min) + min );
+        // return source[index];
     }
 
     Layout.prototype.stopTimer = function() {
@@ -193,7 +229,9 @@ $(function () {
             this.totalTime += +new Date() - this.startTime;
             this.scores++;
             this.correctCount++;
-            alertify.success(this.getRandomMessage('success'));
+
+            alertify.success(this.messages.getSuccessMessage());
+
             this.updateAverageTime();
             this.nextQuestion();
         }
@@ -201,7 +239,7 @@ $(function () {
 
     Layout.prototype.onWrong = function() {
         if (this.timer) {
-            alertify.error(this.getRandomMessage('wrong'));
+            alertify.error(this.messages.getErrorMessage());
             this.scores--;
             this.wrongCount++;
             this.updateScores();
@@ -236,24 +274,23 @@ $(function () {
         var _this = this;
         var correct = true;
         var sign = $('.b-sign-type .btn-info').data('value')
-        if (_this.tonic.sign !== sign) {
+        if (this.tonic.sign !== sign) {
             correct = false;
         }
         var count = 0;
         if (sign) {
             count = $('.b-signs-count .btn-info').data('value');
         }
-        if (_this.tonic.signs !== count) {
+        if (this.tonic.signs !== count) {
             correct = false;
         }
         if (correct) {
-            _this.onCorrect();
+            this.onCorrect();
         } else {
-            _this.onWrong();
+            this.onWrong();
         }
     }
 
     layout = new Layout();
 
 });
-}).call(this);
