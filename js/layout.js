@@ -1,7 +1,10 @@
-$(function () {
+Doc(document).ready(function () {
+    var _ = window._,
+        alertify = window.alertify;
+
     var Layout, layout;
 
-    Messages = function () {
+    var Messages = function () {
         this.correctList = [
             'Да!',
             'Правильно!',
@@ -42,7 +45,6 @@ $(function () {
         };
     };
 
-
     Layout = function () {
         var messages = new Messages();
 
@@ -66,51 +68,51 @@ $(function () {
         alertify.set({ delay: 2000 });
 
         var _this = this;
+        var view = this;
 
-
-        $('.b-sign-type .btn').click(function(){
-            $('.b-sign-type .btn').removeClass('btn-info');
-            $(this).addClass('btn-info');
+        Doc('.b-sign-type .btn').on('click', function () {
+            Doc('.b-sign-type .btn').removeClass('btn-info');
+            Doc(this).addClass('btn-info');
         });
 
-        $('.b-signs-count .btn').click(function(){
-            $('.b-signs-count .btn').removeClass('btn-info');
-            $(this).addClass('btn-info');
+        Doc('.b-signs-count .btn').on('click', function () {
+            Doc('.b-signs-count .btn').removeClass('btn-info');
+            Doc(this).addClass('btn-info');
         });
-        $('.filters-lad .btn-group .btn').click(function(){
-            $('.filters-lad .btn-group .btn').removeClass('btn-info');
-            $(this).addClass('btn-info');
+        Doc('.filters-lad .btn-group .btn').on('click', function () {
+            Doc('.filters-lad .btn-group .btn').removeClass('btn-info');
+            Doc(this).addClass('btn-info');
         });
-        $('.filters-count .btn-group .btn').click(function(){
-            $('.filters-count .btn-group .btn').removeClass('btn-info');
-            $(this).addClass('btn-info');
+        Doc('.filters-count .btn-group .btn').on('click', function () {
+            Doc('.filters-count .btn-group .btn').removeClass('btn-info');
+            Doc(this).addClass('btn-info');
         });
 
-        $('.btn-info').click(function(){
+        Doc('.btn-info').on('click', function () {
             _this.resetInputs();
         });
 
-        $('.controls .start').click(function () {
-            $('.controls .start').toggleClass('hidden');
-            $('.controls .stop').toggleClass('hidden');
-            $('.descr').hide();
-            $('.game').show();
+        Doc('.controls .start').on('click', function () {
+            Doc('.controls .start').toggleClass('hidden');
+            Doc('.controls .stop').toggleClass('hidden');
+            Doc('.descr').hide();
+            Doc('.game').show();
 
             alertify.success(messages.getIsReadyMessage());
 
             _this.nextQuestion();
         });
 
-        $('.controls .stop').click(function(){
+        Doc('.controls .stop').on('click', function () {
             _this.stopTimer();
-            $('.controls .start').toggleClass('hidden');
-            $('.controls .stop').toggleClass('hidden');
+            Doc('.controls .start').toggleClass('hidden');
+            Doc('.controls .stop').toggleClass('hidden');
 
-            $('.game').hide();
-            $('.descr').show();
+            Doc('.game').hide();
+            Doc('.descr').show();
         });
 
-        $('.check_tonic').click(function() {
+        Doc('.check_tonic').on('click', function() {
             _this.checkAnswer();
         });
 
@@ -119,26 +121,18 @@ $(function () {
     };
 
     Layout.prototype.resetInputs = function(type) {
-        $('.b-sign-type .btn').removeClass('btn-info');
-        $('.b-signs-count .btn').removeClass('btn-info');
-        $('.b-sign-type .btn:first').addClass('btn-info');
-    }
+        Doc('.b-sign-type .btn').removeClass('btn-info');
+        Doc('.b-signs-count .btn').removeClass('btn-info');
+        Doc('.b-sign-type .btn')[0].addClass('btn-info');
+    };
 
     Layout.prototype.getRandomMessage = function(type) {
-        type = type || 'wrong';
-
         if (type === 'success') {
             this.messages.getCorrectMessage();
         } else {
             this.messages.getErrorMessage();
         }
-
-        // var source = (type === 'wrong') ? this.wrongMessages : this.correctMessages;
-        // var min = -1;
-        // var max = source.length - 1;
-        // var index = Math.ceil( Math.random() * (max - min) + min );
-        // return source[index];
-    }
+    };
 
     Layout.prototype.stopTimer = function() {
         if (this.timer) {
@@ -146,18 +140,18 @@ $(function () {
             this.timer = false;
         }
         this.timeLeft = this.timeLimit;
-        $('.time').text(this.timeLimit);
-    }
+        Doc('.time').text(this.timeLimit);
+    };
 
     Layout.prototype.startTimer = function() {
         var _this = this;
         if (this.timer) {
-            $('.time').removeClass('wrong');
+            Doc('.time').removeClass('wrong');
             clearInterval(_this.timer);
             this.timeLeft = this.timeLimit;
         }
 
-        $('.time').removeClass('wrong').text(this.timeLimit);
+        Doc('.time').removeClass('wrong').text(this.timeLimit);
         this.timer = setInterval(function() {
             _this.timeLeft = _this.timeLeft-1;
             if (_this.timeLeft <= 0) {
@@ -166,33 +160,35 @@ $(function () {
             _this.updateTimer();
         }, 1000);
         this.startTime = +new Date();
-    }
+    };
 
     Layout.prototype.getLad = function() {
-        return $('.filters-lad .btn-info').data('value') || false;
-    }
+        return Doc('.filters-lad .btn-info')[0].attr('data-value') || false;
+    };
     Layout.prototype.getMaxSignsCount = function() {
-        return $('.filters-count .btn-info').data('value') || 7
-    }
+        return +(Doc('.filters-count .btn-info')[0].attr('data-value')) || 7;
+    };
 
     Layout.prototype.updateTimer = function() {
-        $('.time').text(this.timeLeft);
-    }
+        Doc('.time').text(this.timeLeft);
+    };
     Layout.prototype.timeOut = function() {
         clearInterval(this.timer);
-        $('.time').addClass('wrong').text('0');
+        Doc('.time').addClass('wrong').text('0');
         this.onTimeOut();
-    }
+    };
 
     Layout.prototype.generateNote = function(alias) {
-        var tonics = [];
+        var tonics = [],
+            filters;
+
         if (alias) {
             tonics = this.notes.getTonic(alias);
         } else {
             filters = {
                 lad: this.getLad(),
                 maxSignsCount: this.getMaxSignsCount()
-            }
+            };
             tonics = this.notes.getRandomTonic(filters);
         }
         if (tonics.length) {
@@ -204,24 +200,24 @@ $(function () {
             console.error('Incorrect tonic', alias);
         }
         return this.tonic;
-    }
+    };
 
     Layout.prototype.drawNote = function() {
-        $('.b-note .mus').text(this.tonic.alias);
-        $('.b-note .lang').text(this.tonic.lang.ru);
-    }
+        Doc('.b-note .mus').text(this.tonic.alias);
+        Doc('.b-note .lang').text(this.tonic.lang.ru);
+    };
 
     Layout.prototype.updateScores = function() {
-        $('.correctCount').text(this.correctCount);
-        $('.wrongCount').text(this.wrongCount);
-        $('.scores').text(this.scores);
-    }
+        Doc('.correctCount').text(this.correctCount);
+        Doc('.wrongCount').text(this.wrongCount);
+        Doc('.scores').text(this.scores);
+    };
 
     Layout.prototype.updateAverageTime = function() {
         this.averageTime = this.totalTime / this.correctCount;
-        averageSeconds = Math.floor(this.averageTime / 1000);
-        $('.averageTime').text(averageSeconds + ' с');
-    }
+        var averageSeconds = Math.floor(this.averageTime / 1000);
+        Doc('.averageTime').text(averageSeconds + ' с');
+    };
 
     Layout.prototype.onCorrect = function() {
         if (this.timer) {
@@ -235,7 +231,7 @@ $(function () {
             this.updateAverageTime();
             this.nextQuestion();
         }
-    }
+    };
 
     Layout.prototype.onWrong = function() {
         if (this.timer) {
@@ -244,7 +240,7 @@ $(function () {
             this.wrongCount++;
             this.updateScores();
         }
-    }
+    };
 
     Layout.prototype.onTimeOut = function() {
         if (this.timer) {
@@ -253,43 +249,51 @@ $(function () {
             this.scores--;
             this.nextQuestion();
         }
-    }
+    };
 
     Layout.prototype.nextQuestion = function(alias) {
         this.resetInputs();
-        $('.controls .btn').attr('disabled', 'disabled');
-        $('.b-note .mus').text('...');
-        $('.b-note .lang').text('');
+
+        Array.prototype.forEach.call(Doc('.controls .btn'), function(el, i){
+            el.attr('disabled', 'disabled');
+        });
+
+        Doc('.b-note .mus')[0].text('...');
+        Doc('.b-note .lang')[0].text('');
         var _this = this;
         this.updateScores();
-        setTimeout(function(){
+        setTimeout(function () {
             _this.generateNote(alias);
             _this.drawNote();
             _this.startTimer();
-            $('.controls .btn').removeAttr('disabled');
+            Doc('.controls .btn').removeAttr('disabled');
         }, 2000);
-    }
+    };
 
     Layout.prototype.checkAnswer = function() {
         var _this = this;
         var correct = true;
-        var sign = $('.b-sign-type .btn-info').data('value')
+        var sign = Doc('.b-sign-type .btn-info')[0].attr('data-value');
+
         if (this.tonic.sign !== sign) {
             correct = false;
         }
+
         var count = 0;
         if (sign) {
-            count = $('.b-signs-count .btn-info').data('value');
+            count = Doc('.b-signs-count .btn-info')[0].attr('data-value');
         }
-        if (this.tonic.signs !== count) {
+
+        if (this.tonic.signs !== +count) {
             correct = false;
         }
+
         if (correct) {
             this.onCorrect();
         } else {
             this.onWrong();
         }
-    }
+    };
 
     layout = new Layout();
 

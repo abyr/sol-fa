@@ -1,35 +1,28 @@
-(function() {
+;(function(_) {
 
 var Note = function(fields) {
-    fields = fields || {}
-    this.alias = fields.alias || ''
-    this.type = fields.type || ''
-    this.sign = fields.sign || ''
-    this.signs = fields.signs || ''
-}
+    fields = fields || {};
+    this.alias = fields.alias || '';
+    this.type = fields.type || '';
+    this.sign = fields.sign || '';
+    this.signs = fields.signs || '';
+};
 
 var Notes = function() {
 
-    this.majors = [
-        {
+    this.majors = [ {
             alias: 'Cb',
             type: 'major',
             sign: 'b',
             signs: 7,
-            lang: {
-                ru: 'До бемоль мажор'
-            }
-        },
-        {
+            lang: { ru: 'До бемоль мажор' }
+        }, {
             alias: 'Gb',
             type: 'major',
             sign: 'b',
             signs: 6,
-            lang: {
-                ru: 'Соль бемоль мажор'
-            }
-        },
-        {
+            lang: { ru: 'Соль бемоль мажор' }
+        }, {
             alias: 'Db',
             type: 'major',
             sign: 'b',
@@ -289,23 +282,23 @@ var Notes = function() {
 
     this.all = this.majors.concat(this.minors);
 
-}
+};
 
 Notes.prototype.getTonic = function(alias) {
     if (!alias) {
         return this.getRandomTonic();
     }
     return _.filter(this.all, function(note){
-        return note.alias === alias
+        return note.alias === alias;
     });
-}
+};
 
 Notes.prototype.getRandomTonic = function(filters) {
     if (typeof filters.lad === 'undefined') {
         filters.lad = false;
     }
     if (typeof filters.maxSignsCount === 'undefined') {
-        filters.maxSignsCount = 7
+        filters.maxSignsCount = 7;
     }
 
     var source = _.filter(this.all, function(note){
@@ -325,9 +318,9 @@ Notes.prototype.getRandomTonic = function(filters) {
     var index = Math.ceil(i);
 
     return [source[index]];
-}
+};
 
 window.Note = Note;
 window.Notes = Notes;
 
-}).call(this);
+})(window._)
