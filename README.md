@@ -5,6 +5,4 @@ Sol-fa under pressure
 
 Online 
 
-http://abyr.github.io/sol-fa/
-
 http://solfa-pressure.herokuapp.com
