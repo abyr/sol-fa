@@ -67,66 +67,76 @@ Doc(document).ready(function () {
 
         alertify.set({ delay: 2000 });
 
-        var _this = this;
         var view = this;
 
-        Doc('.b-sign-type .btn').on('click', function () {
-            Doc('.b-sign-type .btn').removeClass('btn-info');
-            Doc(this).addClass('btn-info');
-        });
+        this.settings = {
+            fret: '',
+            signs_count: 7
+        };
 
-        Doc('.b-signs-count .btn').on('click', function () {
-            Doc('.b-signs-count .btn').removeClass('btn-info');
-            Doc(this).addClass('btn-info');
-        });
-        Doc('.filters-lad .btn-group .btn').on('click', function () {
-            Doc('.filters-lad .btn-group .btn').removeClass('btn-info');
-            Doc(this).addClass('btn-info');
-        });
-        Doc('.filters-count .btn-group .btn').on('click', function () {
-            Doc('.filters-count .btn-group .btn').removeClass('btn-info');
-            Doc(this).addClass('btn-info');
-        });
+        this.init = function () {
+            Doc('.settings .frets .btn').on('click', this.onSelectType);
+            Doc('.answers .frets .btn').on('click', this.onAnswerType);
+            Doc('.settings .signs_count .btn').on('click', this.onSelectSignsCount);
+            Doc('.answers .signs_count .btn').on('click', this.onAnswerSignsCount);
+        };
 
-        Doc('.btn-info').on('click', function () {
-            _this.resetInputs();
-        });
+        this.onSelectType = function (evnt) {
+            var el = Doc(evnt.target);
+
+            Doc('.settings .frets .btn').removeClass('active');
+            el.addClass('active');
+            view.settings.fret = el.attr('data-value');
+        };
+
+        this.onSelectSignsCount = function (evnt) {
+            var el = Doc(evnt.target);
+
+            Doc('.settings .signs_count .btn').removeClass('active');
+            el.addClass('active');
+            view.settings.signs_count = el.attr('data-value');
+        };
+
+        this.onAnswerType = function (evnt) {
+            Doc('.answers .frets .btn').removeClass('active');
+            Doc(evnt.target).addClass('active');
+        };
+
+        this.onAnswerSignsCount = function (evnt) {
+            Doc('.answers .signs_count .btn').removeClass('active');
+            Doc(evnt.target).addClass('active');
+        };
 
         Doc('.controls .start').on('click', function () {
             Doc('.controls .start').toggleClass('hidden');
             Doc('.controls .stop').toggleClass('hidden');
-            Doc('.descr').hide();
-            Doc('.game').show();
+            Doc('.tips').hide();
+            Doc('.gameboard').show();
+            Doc('.status').show();
 
             alertify.success(messages.getIsReadyMessage());
 
-            _this.nextQuestion();
+            view.nextQuestion();
         });
 
         Doc('.controls .stop').on('click', function () {
-            _this.stopTimer();
+            view.stopTimer();
             Doc('.controls .start').toggleClass('hidden');
             Doc('.controls .stop').toggleClass('hidden');
 
-            Doc('.game').hide();
-            Doc('.descr').show();
+            Doc('.gameboard').hide();
+            Doc('.tips').show();
         });
 
-        Doc('.check_tonic').on('click', function() {
-            _this.checkAnswer();
+        Doc('.check').on('click', function( ) {
+            view.checkAnswer();
         });
 
         this.notes = new window.Notes();
 
     };
 
-    Layout.prototype.resetInputs = function(type) {
-        Doc('.b-sign-type .btn').removeClass('btn-info');
-        Doc('.b-signs-count .btn').removeClass('btn-info');
-        Doc('.b-sign-type .btn')[0].addClass('btn-info');
-    };
-
-    Layout.prototype.getRandomMessage = function(type) {
+    Layout.prototype.getRandomMessage = function (type) {
         if (type === 'success') {
             this.messages.getCorrectMessage();
         } else {
@@ -134,7 +144,7 @@ Doc(document).ready(function () {
         }
     };
 
-    Layout.prototype.stopTimer = function() {
+    Layout.prototype.stopTimer = function () {
         if (this.timer) {
             clearInterval(this.timer);
             this.timer = false;
@@ -143,42 +153,42 @@ Doc(document).ready(function () {
         Doc('.time').text(this.timeLimit);
     };
 
-    Layout.prototype.startTimer = function() {
-        var _this = this;
+    Layout.prototype.startTimer = function () {
+        var view = this;
         if (this.timer) {
             Doc('.time').removeClass('wrong');
-            clearInterval(_this.timer);
+            clearInterval(view.timer);
             this.timeLeft = this.timeLimit;
         }
 
         Doc('.time').removeClass('wrong').text(this.timeLimit);
         this.timer = setInterval(function() {
-            _this.timeLeft = _this.timeLeft-1;
-            if (_this.timeLeft <= 0) {
-                _this.timeOut();
+            view.timeLeft = view.timeLeft-1;
+            if (view.timeLeft <= 0) {
+                view.timeOut();
             }
-            _this.updateTimer();
+            view.updateTimer();
         }, 1000);
         this.startTime = +new Date();
     };
 
-    Layout.prototype.getLad = function() {
-        return Doc('.filters-lad .btn-info')[0].attr('data-value') || false;
+    Layout.prototype.getFret = function () {
+        return this.settings.fret;
     };
-    Layout.prototype.getMaxSignsCount = function() {
-        return +(Doc('.filters-count .btn-info')[0].attr('data-value')) || 7;
+    Layout.prototype.getMaxSignsCount = function () {
+        return this.settings.signs_count || 7;
     };
 
-    Layout.prototype.updateTimer = function() {
+    Layout.prototype.updateTimer = function () {
         Doc('.time').text(this.timeLeft);
     };
-    Layout.prototype.timeOut = function() {
+    Layout.prototype.timeOut = function () {
         clearInterval(this.timer);
         Doc('.time').addClass('wrong').text('0');
         this.onTimeOut();
     };
 
-    Layout.prototype.generateNote = function(alias) {
+    Layout.prototype.generateNote = function (alias) {
         var tonics = [],
             filters;
 
@@ -186,7 +196,7 @@ Doc(document).ready(function () {
             tonics = this.notes.getTonic(alias);
         } else {
             filters = {
-                lad: this.getLad(),
+                lad: this.getFret(),
                 maxSignsCount: this.getMaxSignsCount()
             };
             tonics = this.notes.getRandomTonic(filters);
@@ -202,24 +212,24 @@ Doc(document).ready(function () {
         return this.tonic;
     };
 
-    Layout.prototype.drawNote = function() {
-        Doc('.b-note .mus').text(this.tonic.alias);
-        Doc('.b-note .lang').text(this.tonic.lang.ru);
+    Layout.prototype.drawNote = function () {
+        Doc('.gameboard .mus').text(this.tonic.alias);
+        Doc('.gameboard .lang').text(this.tonic.lang.ru);
     };
 
-    Layout.prototype.updateScores = function() {
+    Layout.prototype.updateScores = function () {
         Doc('.correctCount').text(this.correctCount);
         Doc('.wrongCount').text(this.wrongCount);
         Doc('.scores').text(this.scores);
     };
 
-    Layout.prototype.updateAverageTime = function() {
+    Layout.prototype.updateAverageTime = function () {
         this.averageTime = this.totalTime / this.correctCount;
         var averageSeconds = Math.floor(this.averageTime / 1000);
         Doc('.averageTime').text(averageSeconds + ' с');
     };
 
-    Layout.prototype.onCorrect = function() {
+    Layout.prototype.onCorrect = function () {
         if (this.timer) {
             this.stopTimer();
             this.totalTime += +new Date() - this.startTime;
@@ -233,7 +243,7 @@ Doc(document).ready(function () {
         }
     };
 
-    Layout.prototype.onWrong = function() {
+    Layout.prototype.onWrong = function () {
         if (this.timer) {
             alertify.error(this.messages.getErrorMessage());
             this.scores--;
@@ -242,7 +252,7 @@ Doc(document).ready(function () {
         }
     };
 
-    Layout.prototype.onTimeOut = function() {
+    Layout.prototype.onTimeOut = function () {
         if (this.timer) {
             this.stopTimer();
             alertify.error('Time out!');
@@ -251,29 +261,34 @@ Doc(document).ready(function () {
         }
     };
 
-    Layout.prototype.nextQuestion = function(alias) {
+    Layout.prototype.resetInputs = function(type) {
+        Doc('.answers .btn').removeClass('active');
+        Doc('.answers .frets .btn')[0].addClass('active');
+    };
+
+    Layout.prototype.nextQuestion = function (alias) {
         this.resetInputs();
 
-        Array.prototype.forEach.call(Doc('.controls .btn'), function(el, i){
+        Array.prototype.forEach.call(Doc('.controls .btn'), function (el, i) {
             el.attr('disabled', 'disabled');
         });
 
-        Doc('.b-note .mus')[0].text('...');
-        Doc('.b-note .lang')[0].text('');
-        var _this = this;
+        Doc('.gameboard .mus')[0].text('...');
+        Doc('.gameboard .lang')[0].text('');
+        var view = this;
         this.updateScores();
         setTimeout(function () {
-            _this.generateNote(alias);
-            _this.drawNote();
-            _this.startTimer();
+            view.generateNote(alias);
+            view.drawNote();
+            view.startTimer();
             Doc('.controls .btn').removeAttr('disabled');
         }, 2000);
     };
 
-    Layout.prototype.checkAnswer = function() {
-        var _this = this;
+    Layout.prototype.checkAnswer = function () {
+        var view = this;
         var correct = true;
-        var sign = Doc('.b-sign-type .btn-info')[0].attr('data-value');
+        var sign = Doc('.answers .frets .active')[0].attr('data-value');
 
         if (this.tonic.sign !== sign) {
             correct = false;
@@ -281,7 +296,7 @@ Doc(document).ready(function () {
 
         var count = 0;
         if (sign) {
-            count = Doc('.b-signs-count .btn-info')[0].attr('data-value');
+            count = Doc('.answers .signs_count .active')[0].attr('data-value');
         }
 
         if (this.tonic.signs !== +count) {
@@ -296,5 +311,6 @@ Doc(document).ready(function () {
     };
 
     layout = new Layout();
+    layout.init();
 
 });

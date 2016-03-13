@@ -2,63 +2,37 @@ html,
 body {
   height: 100%;
 }
-.b-notes .lang {
+.header {
+    background-color: #f5f5f5;
+}
+
+.lang {
     font-size: 4em;
     display: inline-block;
     min-height: 75px;
 }
-.b-notes .mus {
-    display: none;
-    font-size: 5em;
-}
-.descr {
-    margin: 10px 0;
-}
-.alertify-logs {
-    top: 10px;
-    right: 10px;
-}
-.game {
-    display: none;
-}
-.timeStats {
-    margin: 10px 0;
-}
-.gameboard {
-    background-color: #F8F8F8;
-    padding: 10px;
-    -moz-border-radius: 20px;
-    -webkit-border-radius: 20px;
-    -khtml-border-radius: 20px;
-    border-radius: 20px;
-}
+
 .block {
-    margin: 10px;
+    margin: 10px 0;
 }
-.filters {
-    margin-bottom: 20px;
-}
-span.filter {
-    margin-right: 10px;
-}
-.main {
-    min-height: 100%;
-    height: auto;
-    margin: 0 auto -60px;
-    padding: 0 0 60px;
-}
+
 .footer {
-    height: 60px;
     background-color: #f5f5f5;
+    position: fixed;
+    bottom: 0;
 }
-.footer .container {
-    width: auto;
-    max-width: 680px;
-    padding: 0 15px;
+
+.btn {
+    cursor: pointer;
+    border: 1px solid #A2A2A2;
+    padding: 2px;
 }
-.footer .links {
-    margin: 20px 0;
+.active {
+    background-color: #96BFFF;
+    cursor: default;
 }
+
+.inline { display: inline-block; }
 .hidden { display: none; }
 .correct { color: green; }
 .wrong { color: red; }
