@@ -4,9 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sol-fa</title>
-    <link rel="stylesheet" href="bower_components/alertify/themes/alertify.core.css">
-    <link rel="stylesheet" href="bower_components/alertify/themes/alertify.default.css">
-    <link rel="stylesheet" href="css/notes.css">
+    <link rel="stylesheet" href="bower_components/alerts/alerts.css">
+    <link rel="stylesheet" href="css/layout.css">
 </head>
 <body>
 <div class="header">
@@ -39,6 +38,8 @@
     <div class="block controls">
         <span class="btn inline start">Начать игру</span>
         <span class="btn inline stop hidden">Остановить игру</span>
+
+        <div class="inline alerts_container"></div>
     </div>
     <hr/>
 
@@ -106,8 +107,9 @@
 
 <script src="bower_components/extdoc/doc.js"></script>
 <script src="bower_components/underscore/underscore-min.js"></script>
-<script src="bower_components/alertify/alertify.min.js"></script>
+<script src="bower_components/alerts/alerts.js"></script>
 <script src="js/notes.js"></script>
+<script src="js/messages.js"></script>
 <script src="js/layout.js"></script>
 </body>
 </html>

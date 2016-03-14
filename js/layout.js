@@ -1,49 +1,10 @@
 Doc(document).ready(function () {
     var _ = window._,
-        alertify = window.alertify;
+        alerts = window.alerts,
+        Messages = window.Messages,
+        Layout, layout;
 
-    var Layout, layout;
-
-    var Messages = function () {
-        this.correctList = [
-            'Да!',
-            'Правильно!',
-            'Молодец!',
-            'Отлично!',
-            'Верно!',
-            'Так держать!'
-        ];
-
-        this.wrongList = [
-            'Неправильно',
-            'Не сдавайтесь!',
-            'Что-то не так'
-        ];
-
-        this.isReadyMessage = 'Готовы?';
-
-        this.getRandomIndexInRange = function (min, max) {
-            return Math.ceil( Math.random() * (max - min) + min );
-        };
-
-        this.getIsReadyMessage = function () {
-            return this.isReadyMessage;
-        };
-
-        this.getSuccessMessage = function () {
-            var list = this.correctList,
-                index = Math.floor(Math.random()*list.length);
-
-            return list[index];
-        };
-
-        this.getErrorMessage = function () {
-            var list = this.wrongList,
-                index = Math.floor(Math.random()*list.length);
-
-            return list[index];
-        };
-    };
+    alerts.settings.container = Doc('.alerts_container')[0];
 
     Layout = function () {
         var messages = new Messages();
@@ -64,8 +25,6 @@ Doc(document).ready(function () {
         this.startTime = 0;
         this.totalTime = 0;
         this.averageTime = 0;
-
-        alertify.set({ delay: 2000 });
 
         var view = this;
 
@@ -114,7 +73,7 @@ Doc(document).ready(function () {
             Doc('.gameboard').show();
             Doc('.status').show();
 
-            alertify.success(messages.getIsReadyMessage());
+            alerts.log(messages.getIsReadyMessage());
 
             view.nextQuestion();
         });
@@ -236,7 +195,7 @@ Doc(document).ready(function () {
             this.scores++;
             this.correctCount++;
 
-            alertify.success(this.messages.getSuccessMessage());
+            alerts.success(this.messages.getSuccessMessage());
 
             this.updateAverageTime();
             this.nextQuestion();
@@ -245,7 +204,7 @@ Doc(document).ready(function () {
 
     Layout.prototype.onWrong = function () {
         if (this.timer) {
-            alertify.error(this.messages.getErrorMessage());
+            alerts.error(this.messages.getErrorMessage());
             this.scores--;
             this.wrongCount++;
             this.updateScores();
@@ -255,7 +214,7 @@ Doc(document).ready(function () {
     Layout.prototype.onTimeOut = function () {
         if (this.timer) {
             this.stopTimer();
-            alertify.error('Time out!');
+            alerts.error('Time out!');
             this.scores--;
             this.nextQuestion();
         }

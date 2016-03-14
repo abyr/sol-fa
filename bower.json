@@ -15,9 +15,8 @@
     "tests"
   ],
   "dependencies": {
-    "bootstrap": "~3.0.0",
-    "alertify": "~0.3.10",
     "underscore": "~1.5.2",
-    "extdoc": "https://github.com/abyr/extdoc.git"
+    "extdoc": "https://github.com/abyr/extdoc.git",
+    "alerts": "https://github.com/abyr/alerts.git"
   }
 }
